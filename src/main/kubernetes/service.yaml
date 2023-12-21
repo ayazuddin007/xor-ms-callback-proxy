@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: ${project.artifactId}
+  name: ${project.artifactId}
+  namespace: {{env_name}}
+spec:
+  type: ClusterIP
+  selector:
+    app: ${project.artifactId}
+  ports:
+    - port: 80
+      targetPort: ${msContainerPort}
+      name: http

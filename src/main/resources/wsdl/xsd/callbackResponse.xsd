@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns="http://www.wex.com/schema/callbackResponse/1.0" targetNamespace="http://www.wex.com/schema/callbackResponse/1.0"
+            elementFormDefault="qualified">
+    <xsd:element name="InterfaceProcessingResult" type="InterfaceProcessingResultType" />
+    <xsd:element name="BatchProcessingResult" type="BatchProcessingResultType" />
+    <xsd:element name="ReturnFlag" type="ReturnFlag" />
+
+    <xsd:complexType name="InterfaceProcessingResultType">
+        <xsd:sequence>
+            <xsd:element name="CorrelationID" type="xsd:string">
+                <xsd:annotation>
+                    <xsd:documentation>This CorrelationID is used to identify the Request.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="OutputPath" type="xsd:string"
+                         minOccurs="0" maxOccurs="1">
+                <xsd:annotation>
+                    <xsd:documentation>Directory path where the files are written out to</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="InterfaceID" type="xsd:string"
+                         minOccurs="0" maxOccurs="1">
+                <xsd:annotation>
+                    <xsd:documentation>xor Interface ID</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="Status" type="xsd:string" minOccurs="0"
+                         maxOccurs="1">
+                <xsd:annotation>
+                    <xsd:documentation>xor Success or Failure Message</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="SequenceNumber" type="xsd:string"
+                         minOccurs="0" maxOccurs="1">
+                <xsd:annotation>
+                    <xsd:documentation>xor SequenceNumber Message</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="ClientMid" type="xsd:string"
+                         minOccurs="0" maxOccurs="1">
+                <xsd:annotation>
+                    <xsd:documentation>ClientMid</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:choice>
+                <xsd:sequence>
+                    <xsd:element name="InterfaceFiles" type="InterfaceFiles">
+                        <xsd:annotation>
+                            <xsd:documentation>The List of Interface Files.</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                </xsd:sequence>
+                <xsd:sequence>
+                    <xsd:element name="Fault" type="Fault">
+                        <xsd:annotation>
+                            <xsd:documentation>The Fault object if the interface run is	encountered with an exception</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                </xsd:sequence>
+            </xsd:choice>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="BatchProcessingResultType">
+        <xsd:sequence>
+            <xsd:element name="jobName" type="xsd:string"
+                         minOccurs="0" maxOccurs="1">
+                <xsd:annotation>
+                    <xsd:documentation>xor BatchJob name </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="ClientMid" type="xsd:string"
+                         minOccurs="0" maxOccurs="1">
+                <xsd:annotation>
+                    <xsd:documentation>ClientMid</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="CorrelationID" type="xsd:string">
+                <xsd:annotation>
+                    <xsd:documentation>This CorrelationID is used to identify the Request.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:choice>
+                <xsd:sequence>
+                    <xsd:element name="Attributes" type="Attribute" minOccurs="0" maxOccurs="unbounded">
+                        <xsd:annotation>
+                            <xsd:documentation>Attributes For Key Value Pair</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                </xsd:sequence>
+
+                <xsd:sequence>
+                    <xsd:element name="Fault" type="Fault">
+                        <xsd:annotation>
+                            <xsd:documentation>The Fault object if the interface run is	encountered with an exception</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                </xsd:sequence>
+            </xsd:choice>
+
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="Attribute">
+        <xsd:sequence>
+            <xsd:element name="Name" type="xsd:string"/>
+            <xsd:element name="Value" type="xsd:string"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="Fault">
+        <xsd:sequence>
+            <xsd:element name="code" type="xsd:string" />
+            <xsd:element name="message" type="xsd:string" minOccurs="0"
+                         maxOccurs="1" />
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="ReturnFlag">
+        <xsd:sequence>
+            <xsd:element name="Result" type="xsd:boolean" />
+            <xsd:element minOccurs="0" name="message" type="xsd:string" />
+            <xsd:element minOccurs="0" name="statusNumber" type="xsd:long" />
+            <xsd:element minOccurs="0" name="isErrorCode" type="xsd:boolean" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="InterfaceFiles">
+        <xsd:sequence>
+            <xsd:element name="FileName" type="xsd:string" maxOccurs="unbounded">
+                <xsd:annotation>
+                    <xsd:documentation>The file name. Eg: SendPin.xml</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+</xsd:schema>

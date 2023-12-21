@@ -1,0 +1,24 @@
+server:
+  port: 6060
+spring:
+  config:
+    #    import: "consul:"
+    import: "optional:consul:localhost:8500/config"
+  profiles:
+    active: ${MS_PROFILE_NAME:dev}
+  application:
+    name: @project.artifactId@
+  cloud:
+    consul:
+      host: ${CONSUL_HTTP_ADDR:localhost}
+      port: ${CONSUL_PORT:8500}
+      discovery:
+        prefer-ip-address: true
+        instanceId: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+      config:
+        failFast: true
+        format: yaml
+        enabled: true
+xor:
+  connection-timeout: 60000
+  receive-timeout: 3600000

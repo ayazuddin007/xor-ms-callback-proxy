@@ -1,0 +1,6 @@
+spring:
+  datasource:
+    url: jdbc:oracle:thin:@ifcdb.omv.fleetomvdev.ec1.wexglobal.com:1521:IFCDB
+    username: IEWFEDEV_FPA
+    password: fpa_password
+    driver-class-name: oracle.jdbc.OracleDriver

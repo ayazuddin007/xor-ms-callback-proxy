@@ -1,0 +1,56 @@
+<wsdl:definitions targetNamespace="http://www.wex.com/integration/callback" xmlns:tns="http://www.wex.com/integration/callback" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:callback="http://www.wex.com/schema/callbackResponse/1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <wsdl:types>
+    <xs:schema targetNamespace="http://www.wex.com/integration/callback">
+      <xs:import namespace="http://www.wex.com/schema/callbackResponse/1.0" schemaLocation="xsd/callbackResponse.xsd"/>
+    </xs:schema>
+  </wsdl:types>
+
+
+  <wsdl:message name="callbackRQ">
+    <wsdl:part name="InputParam" element="callback:InterfaceProcessingResult"/>
+  </wsdl:message>
+  <wsdl:message name="callbackRS">
+    <wsdl:part name="ResponseParam" element="callback:ReturnFlag"/>
+  </wsdl:message>
+  <wsdl:message name="batchCallbackRQ">
+    <wsdl:part name="batchJobInput" element="callback:BatchProcessingResult" />
+  </wsdl:message>
+  <wsdl:message name="batchCallbackRS">
+    <wsdl:part name="ResponseParam" element="callback:ReturnFlag" />
+  </wsdl:message>
+
+  <wsdl:portType name="CallbackPortTypeSOAP">
+    <wsdl:operation name="callback">
+      <wsdl:input name="Request" message="tns:callbackRQ"/>
+    </wsdl:operation>
+
+
+    <wsdl:operation name="batchCallback">
+      <wsdl:input name="Request" message="tns:batchCallbackRQ" />
+    </wsdl:operation>
+  </wsdl:portType>
+
+  <wsdl:binding name="CallbackSOAP" type="tns:CallbackPortTypeSOAP">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="callback">
+      <soap:operation style="document"/>
+      <wsdl:input name="Request">
+        <soap:body use="literal"/>
+      </wsdl:input>
+    </wsdl:operation>
+
+
+    <wsdl:operation name="batchCallback">
+      <soap:operation style="document" />
+      <wsdl:input name="Request">
+        <soap:body use="literal" />
+      </wsdl:input>
+    </wsdl:operation>
+  </wsdl:binding>
+
+  <wsdl:service name="CallbackService">
+    <wsdl:port name="CallbackSOAP" binding="tns:CallbackSOAP">
+      <soap:address location="http://www.wex.com/integration/callback/CallbackSOAP"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
